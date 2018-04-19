@@ -1,0 +1,15 @@
+X Window System
+
+Keywords: X Server, X Client, X11, X11R6, XFree86, Xorg, Window Manage, Display Manage(XDM, KDM, GDM), KDE, GNOME, QT, GTK, GDK, Glib, Xlib, 
+
+1. What's X Window System(X)
+
+X is the basis of the Linux graphical user interface. X was originally born in the Athena project of MIT on 1980s. Linux itself has no graphical interface, X is only a program under Linux. It's like DOS and Windows3.0. Windows3.0 is't a independent OS,it's a application level OS under DOS. X is based on Server/Client architecture. 
+
+2. Basic Concepts
+
+X Server: X server manages mouse, keyboard, graphics card, monitor. X Server receive X Client request, like draw a circle. Then, X server directs graphical card to draw a circle with it's drive. X Server can capture keyboard and mouse action, and tell X Client. So, X Server can control input device(keyboard, mouse) and bitmap output device(monitor).
+X Client:
+Window Manage:
+Display Manage:
+Desktop Environment:

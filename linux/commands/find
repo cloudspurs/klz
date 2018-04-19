@@ -1,0 +1,58 @@
+NAME
+    find - search for files in a directory hierarchy
+
+SYNOPSIS
+    find [path...] [expression] 
+    expression = options + tests + actions
+
+TESTS
+
+    Numeric arguments can be specified as
+
+    +n  for greater than n,
+    -n  for less than n,
+    n   for exactly n.
+
+    -name pattern
+    
+    -type type(b, c, d, p, f, l, s, D)
+        b   block (buffered) special
+        c   character (unbuffered) special
+        p   named pipe
+        l   symbolic link
+        s   socket
+        D   door(Solaris)
+
+
+    -size size(b, c, w, k, M, G)
+        b   512 bytes
+        c   one byte
+        w   two bytes
+
+    -atime n
+    -anewer file
+    -atime n
+
+    -cmin n
+    -cnewer file
+    -ctime n
+
+    -mmin n
+    -mtime n
+    -newer file
+
+    -perm mode
+    -user username
+    -group groupname
+
+ACTIONS
+
+    -delete
+
+    -ls
+
+    -exec command ;
+        ';' need to be escape to '/;'
+
+        
+
