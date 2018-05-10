@@ -1,0 +1,245 @@
+sql - structured query language
+
+1. select 
+    select distinct columns
+    form table
+    where conditions
+    order by columns asc|desc
+    limit number
+
+    select distinct name, country, alexa
+    from Websites
+    where country='CN' and alexa > 10
+    order by alexa, country desc
+    limit 10;
+
+    conditions
+        column_name operator value;
+            operators
+                = <>(!=) > < >= <= between like in
+        and or
+            condition_1 and|or condition_2
+
+2. insert
+    insert into table(columns)
+    values(value1, value2, value3, ...);
+
+    insert into Websites(name, url, alexa, country)
+    values('Google', 'www.google.com', '1', 'USA');
+
+3. update
+    update table_name
+    set column_name_1=value1, column_name_2=value2, ...
+    where conditions
+
+    update Websites
+    set alexa='5000', country='CN'
+    where name='菜鸟教程';
+
+4. delete
+    delete form table_name
+    where conditions
+
+    delete from Websites
+    where name='Baidu' and country='CN';
+
+    delete all rows without table;
+        delete from table_name; delete * form table_name;
+
+    drop, truncate, delete        
+        drop table_name; delete data(all rows) and table
+        truncate table_name; delete data without table
+        delete: delete specify data
+
+update and delete must has conditions!
+
+5. like
+    select * from Websites
+    where name like 'G%';
+
+    select * from Websites
+    where name like '%k';
+    
+    select * from Websites
+    where name like '%oo%';
+    
+    select * from Websites
+    where name not like '%oo%';
+
+    '%a' 'a%' '%a%' '_a_' '_a' 'a_'
+
+6. wildcard(通配符)
+    %
+    _(下划线)
+    [charlist]
+    [^charlist] [!charlist]
+
+7. in
+    select * from Websites
+    where name in ('Google', 'Baidu');
+
+8. between
+    select * from Websites
+    where alexa between 1 and 20;
+
+    select * from Websites
+    where alexa not between 1 and 20;
+    
+    select * from Websites
+    where alexa between 'A' and 'H';
+
+    select * from Websites
+    where date between '2016-05-10' and '2016-05-14';
+
+9. alias(别名)
+    select name as n, country as c 
+    from Websites;
+
+    select name, concat(url, ', ', alexa, ', ', country) as site_info 
+    from Websites;
+
+    select w.name a.count
+    from Websites as w, access_log as a
+    where a.site_id=w.id and w.name='Google';
+
+10. join(inner join), left join, right join, full join
+    join: 返回两表都匹配的值(例如两表都有id为1才返回. 若只有一表有id为1的行, 另一表没有id为1的值, 则这行不会返回.)
+    left join: 以左表为基准，若右表没有匹配的值，只返回左表内容，其余字段为NULL。
+    righ join: 以右表为基准，若左表没有匹配的值，只返回右表内容，其余字段为NULL。
+    full join: left join and right join
+
+    首先，连接的结果可以在逻辑上看作是由SELECT语句指定的列组成的新表。
+    左连接与右连接的左右指的是以两张表中的哪一张为基准，它们都是外连接。
+    外连接就好像是为非基准表添加了一行全为空值的万能行，用来与基准表中找不到匹配的行进行匹配。假设两个没有空值的表进行左连接，左表是基准表，左表的所有行都出现在结果中，右表则可能因为无法与基准表匹配而出现是空值的字段
+    
+    select Websites.id, Websites.name, access_log.count, access_log.date
+    from Websites
+    (inner) join access_log
+    on Websites.id=access_log.site_id
+
+    select Websites.id, Websites.name, access_log.count, access_log.date
+    from Websites
+    left (outer) join access_log
+    on Websites.id=access_log.site_id
+
+    select Websites.id, Websites.name, access_log.count, access_log.date
+    from Websites
+    right (outer) join access_log
+    on Websites.id=access_log.site_id
+
+    select Websites.id, Websites.name, access_log.count, access_log.date
+    from Websites
+    full outer join access_log
+    on Websites.id=access_log.site_id
+
+    inner join <= min(left join, right join)
+    full join >= max(left join, right join)
+    when inner join < min(left join, right join), full join > max(left join, right join)
+    
+11. union
+    select country from Websites
+    union (all)
+    select country from apps
+    order by country
+
+12. select into && insert into select(mysql)
+    select * into table1 [in externaldb]
+    from table2
+
+    seletc columns into table1 [in externaldb]
+    from table2
+
+    select *
+    into WebsitesBack2016
+    from Websites
+    where country='CN';
+
+    select name, url
+    into WebsitesBack2016
+    from Websites;
+
+    select * into table1
+    from table2
+    where 1=0;
+
+    create table table1 select * from table2
+
+    insert into table1
+    select * from table2
+
+    insert into table1(columns)
+    select columns
+    from table2
+
+    insert into Websites(name, country)
+    select app_name, country
+    from apps;
+
+13. create constraints(约束)
+    create database dbname;
+    create database my_db;
+
+    create table table_name (
+        column_name1 datatype(size) constraint_name,
+        column_name2 datatype(size) constraint_name,
+        column_name3 datatype(size) constraint_name,
+        ...
+    );
+
+    constraint
+       not null
+       unique
+       primary key
+       foreign key
+       check
+       default
+
+    create table Persons (
+        id int not null,
+        last_name varchar(255) not null,
+        first_name varchar(255),
+        address varchar(255),
+        primary key (id),
+        unique (id)
+    );
+
+    create table Persons (
+        id int not null primary key unique,
+        last_name varchar(255) not null,
+        first_name varchar(255),
+        address varchar(255)
+    );
+
+    create table Persons (
+        id int not null,
+        last_name varchar(255) not null,
+        first_name varchar(255),
+        address varchar(255),
+        constraint pk_id primary key (id, last_name),
+        constraint uq_id unique (id, last_name)
+    );
+
+    alter table Persons
+    add unique (id);
+
+    alter table Persons
+    add constraint uq_id unique(id, last_name);
+    
+    (mysql)
+    alter table Persons
+    drop index uq_id;
+
+    alter table Persons
+    drop constraint uq_id;
+    
+    (mysql)
+    alter table Persons
+    drop primary key
+
+    alter table Persons
+    drop constraint pk_id
+    
+    alter table Persons
+    drop constraint id
+    
+
