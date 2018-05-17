@@ -1,0 +1,16 @@
+EXTERN
+
+NAME
+   extern - declaring a external function or variable
+
+SYNOPSIS
+    If can't find a function or variable in front of current complied statement, 
+    it will also be found in the back of the current file or in other files.
+
+DESCRIPTION
+    Modern compliers always has compile and link two steps. 
+    
+    Compiler compiles source file sperately and generates object code file.
+    So, when compiles a file, complier don't know other files content.
+    
+    
