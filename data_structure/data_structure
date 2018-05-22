@@ -1,0 +1,30 @@
+logical structure
+    linear structure
+    tree structure
+    graph structure
+
+storage structure
+    sequential method
+    linked method
+    index method
+    hash method
+
+abstract data type(ADT)
+
+
+linear list
+    array-based list(vector)
+    linked list
+        singly linked list
+        double linked list
+        circularly linked list
+
+special linear list
+    stack
+
+    queue
+
+tree
+    binary tree
+
+graph

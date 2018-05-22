@@ -1,0 +1,28 @@
+conception
+    generality
+    effectiveness
+    certainly
+    finiteness
+
+algorithm design
+    enumeration
+    backtrack
+    divide and conquer
+    recursion
+    greedy
+    dynamic programming
+
+algorithm analysis
+    computational complexity
+        time complexity
+        space complexity
+    
+    progressive analysis method
+        O(n)
+        Ω(n)
+        θ(n)
+
+    worst best average
+
+    time and space tradeoff
+
