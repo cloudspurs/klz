@@ -1,7 +1,6 @@
 c++ make
 sql hive 
-shell python
+shell
 tensorflow
-seq2seq
 handop spark elasticsearch
 

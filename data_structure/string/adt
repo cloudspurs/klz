@@ -1,0 +1,20 @@
+ADT 
+    class string {
+    private:
+        ...
+        ...
+
+    public():
+        string();
+        string(char* s);
+        ~string();
+        int length();
+        int isEmpty();
+        void clear();
+        string append(const char c);
+        string concatenate(const char* s);
+        string copy(const char* s);
+        string insert(const char c, const int index);
+        int find(const char c, const int start);
+        int substr(const int s, const int len);
+    }
