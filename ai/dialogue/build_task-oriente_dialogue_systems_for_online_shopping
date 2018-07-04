@@ -1,0 +1,35 @@
+Abstract
+
+A general solution to building task-oriented dialogue system for online shopping.
+To complete various puchase-releated tasks, such as recommending products and answering question.
+In a natural language conversation manner.
+Support chit-chat.
+
+Existing natural language processing techniques, data resources and crowdsourcing
+to leverage a task-oriented dialogue system.
+
+First integrate a dialogue system to a moblie online shopping app with millions of real consumers.
+
+Introduction
+
+Challengs
+	Developing a structured ontology for NLU can be very difficult in cold stage
+	where domain experts have to define the slot and possible values for specific domain.
+
+	contains hundreds categories
+
+	hard to collect a large scale human-human dialogue data in shopping scenario.
+
+Three kinds of data resources
+	Product knowledge base
+	search log
+	community sites
+
+Two different for previous work
+
+	Training Data
+	Domian scale
+
+System Formalization
+	DS = {QU, ST, DM, PKB}
+	

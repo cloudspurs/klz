@@ -13,14 +13,16 @@ non-task-oriented
 	Retrieval-based Methods
 
 Pipeline(管道) Methods
-	The systems first understand the message given by human, represent it as an internal state;
-	then take some actions with current dialogue state and the policy;  
+	The systems first understand the message given by human, represent(表示) it as an internal state;
+	then take some actions according to the policy with respect to(关于) the dialogue state;  
 	and finally, the action is transformed  to its surface form as a natural language.
 	
-	Question(text) - NLU - DST - DPL - NLG - Answer(text)
+	It consistes of four key components:
+		Utterance(May I know your name) - NLU - DST - DPL - NLG - Utterance(I am Robot)
 	
 	NLU - Natural Language Understanding
-		input -> sematic slots
+		It is known as natural language understanding, which parses the user
+		uterance into pre-defined semantic slots.
 
 		Table-1
 		Sentence	show	restaurant	at	New	York	tommorrow
@@ -29,7 +31,7 @@ Pipeline(管道) Methods
 		Domian		Order
 
 		Give an utterance(言辞，言论), NLU maps it into sematic slots(语义槽),
-		The slots are pre-defined according to different to scenaries.
+		The slots are pre-defined according to different scenaries(场景).
 		Typically, there are two level representations. 
 			One is the word-level information extraction such as named entity recognition and slot filling. 
 			(like scanning, lexical analysis, 词法分析)
@@ -43,6 +45,9 @@ Pipeline(管道) Methods
 		(其中，“New York”被认为是一个槽值(word-level), intent 和 domain 的值也会被指定(utterance level))
 
 	DST - Dialogue State Tracking 
+		It manages the input of each turn along with the dialogue history
+		and outputs the current dialogue state.
+
 		Tracking dialogue states is the core component to ensure a robust manner(健壮性) in dialog systems.
 		It estimates(预测) the users goal at every turn of the dialogue, manage current input and dialogue history,
 		and output dialogue state. This classic state structure is commonly called slot filling(槽填充) or semantic frame(语义框架).
@@ -51,6 +56,8 @@ Pipeline(管道) Methods
 		However, these rele-based systems are prone to(易于) frequent errors as the most result is not always the desired one.
 	
 	DPL - Dialogue Policy Learing  
+		It learns the next action based on current dialogue state.
+
 		Conditioned on the state representation from the state tracker,
 		the policy learning is to generate the next availavle system action.
 		Either supervised learning(监督学习) or reinforcement learning(强化xuexi)
@@ -63,6 +70,8 @@ Pipeline(管道) Methods
 		to lead the system making policies toward the final performance.
 
 	NLG - Natural Language Generation
+		It maps the selected action to its surface and generates the response.
+
 		The natural language generation component converts an abstract dialogue action
 		into natural language surface utterances. A good generator usually relies on
 		several factors: adequacy(适当), fluency, readability(可读) and variation(灵活).

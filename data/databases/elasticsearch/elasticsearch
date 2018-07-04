@@ -1,0 +1,212 @@
+Elasticsearch
+
+
+Basic Concepts
+
+Near Realtime(NRT)
+	there is a slight latency - normally one second
+
+Cluster
+	default name - elasticsearch
+
+Node
+	
+Index
+	
+Type
+	deprecated in 6.0.0
+
+Document
+	A document is a basic unit of information that can be indexed.
+
+Shards & Repicas
+
+Installation
+	port 9200
+	./elasticsearch -Ecluster.name=my_cluster_name -Enode.name=my_node_name	
+
+The REST API
+	Check cluster, node, index health, status and statictics
+	Administer your cluster, node and index data and metadata
+	Perform CRUD and search operations against your indexes
+	Execute advanced search operations, such as paging, sorting, filtering, scripting, aggregations, and many others
+	
+Cluster Health
+	curl -X GET "localhost:9200/_cat/health?v"
+	
+	The response
+		epoch      timestamp cluster       status node.total node.data shards pri relo init unassign pending_tasks max_task_wait_time active_shards_percent
+		1475247709 17:01:49  elasticsearch green           1         1      0   0    0    0        0             0                  -                100.0%
+    
+    cluster health
+        Green - everything is good (cluster is fully fucntional)
+        Yellow - all data is available but some replicas are not yet allocated (cluster is fully functioanl)
+        Red - some data is not available for whatever reason (cluster is partially functional)
+
+List All Indices
+	curl -X GET "localhost:9200/_cat/indices?v"
+    
+Create an Index
+    curl -X PUT "localhost:9200/customer?pretty"
+    curl -X GET "localhost:9200/_cat/indices?v"
+    
+    We simply append pretty to the end of the call to tell it to pretty-print the JSON response.
+
+Index and Query a Document
+    curl -X PUT "localhost:9200/customer/_doc/1?pretty" -H 'Content-Type: application/json' -d'
+    {
+      "name": "John Doe"
+    }'
+    
+    curl -X GET "localhost:9200/customer/_doc/1?pretty"
+
+Delete an Index
+    curl -X DELETE "localhost:9200/customer?pretty"
+    curl -X GET "localhost:9200/_cat/indices?v"
+
+Commands Pattern
+    <REST Verb> /<Index>/<Type>/<ID>
+
+
+Modifying Your Data
+
+Indexing/Replacing Documents
+    curl -X PUT "localhost:9200/customer/_doc/1?pretty" -H 'Content-Type: application/json' -d
+    '{
+      "name": "John Doe"
+    }'
+    
+    curl -X PUT "localhost:9200/customer/_doc/1?pretty" -H 'Content-Type: application/json' -d
+    '{
+      "name": "Jane Doe"
+    }'
+
+    The above changes the name of the document with the ID of 1 from "Johe Doe" to "Jane Doe".
+    If, on the other hand, we use a different ID, a new document will be indexed and the 
+    existing document(s) alreadly in the index remains untouched.
+
+    curl -X POST "localhost:9200/customer/_doc?pretty" -H 'Content-Type: application/json' -d
+    '{
+      "name": "John Doe"
+    }'
+
+    {
+      "_index" : "customer",
+      "_type" : "_doc",
+      "_id" : "xn0DZGQBSNV89hNtytBL",
+      "_version" : 1,
+      "result" : "created",
+      "_shards" : {
+        "total" : 2,
+        "successful" : 1,
+        "failed" : 0
+      },
+      "_seq_no" : 2,
+      "_primary_term" : 1
+    }
+
+    When indexing, the ID part is optional. If not specified, Elasticsearch will generate a
+    random ID.
+    
+    Note that in the above case, we are using the POST verb instead of PUT since we didn't
+    specify an ID.
+
+Updating Documents
+    Elasticsearch does not actually do in-place updates under the hood(在后台). Whenever
+    we do an update, Elasticsearch deletes the old document and then indexes a new document
+    with the update applied to it in one shot(一举).
+
+    This example shows how to update our previous document(ID of 1) by changing the name field
+    to "Jane Doe" and at the same time add an field to it:
+
+    curl -X POST "localhost:9200/customer/_doc/1/_update?pretty" -H 'Content-Type: application/json' -d
+    '{
+        "doc": {"name": "Jane Doe", "age": 20}
+    }'
+
+    Updates can also be performed by using simple scripts. This example uses a script to increment
+    the age by 5:
+    
+    curl -X POST "localhost:9200/customer/_doc/1/_update?pretty" -H 'Content-Type: application/json' -d
+    '{
+      "script": "ctx._source.age += 5"
+    }'
+
+Deleteing Documents
+    curl -X DELETE "localhost:9200/customer/_doc/2?pretty"
+
+    It is much more efficient to delete a whole index instead of deleting all documents.
+    
+Batch Processing
+    In addition to being able to index, update and delet individual documents, Elasticsearch also
+    provides the ability to perform any of the above operations in batches using the _bulk API.
+
+    curl -X POST "localhost:9200/customer/_doc/_bulk?pretty" -H 'Content-Type: application/json' -d'
+    {"index":{"_id":"1"}}
+    {"name": "John Doe" }
+    {"index":{"_id":"2"}}
+    {"name": "Jane Doe" }'
+    
+    curl -X POST "localhost:9200/customer/_doc/_bulk?pretty" -H 'Content-Type: application/json' -d'
+    {"update":{"_id":"1"}}
+    {"doc": { "name": "John Doe becomes Jane Doe" } }
+    {"delete":{"_id":"2"}}'
+
+    The Bulk API does not fail due to failure in one of the actions. If a single action fails for
+    whatever reson, it will continue to preocess the remiander of the actions after it. When the
+    buld API returns, it will provide a status for each action(in the same order it was send).
+
+
+Exploring Your Data
+
+The Search API
+
+    Two Basic Ways
+        sending search parameters through the REST request URL
+        sending search parameters through the REST request body
+
+    The request body method allows you be more expressive(表现力) and also to define your searches
+    in a more readable JSON format.
+
+    The REST API for search is accessible from the _search endpoint. This example returns all
+    documents in the bank index;
+
+    curl -X GET "localhost:9200/bank/_search?q=*&sort=account_number:asc&pretty"
+
+    And the response
+
+    {
+      "took" : 63,
+      "timed_out" : false,
+      "_shards" : {
+        "total" : 5,
+        "successful" : 5,
+        "skipped" : 0,
+        "failed" : 0
+      },
+      "hits" : {
+        "total" : 1000,
+        "max_score" : null,
+        "hits" : [ {
+          "_index" : "bank",
+          "_type" : "_doc",
+          "_id" : "0",
+          "sort": [0],
+          "_score" : null,
+          "_source" : {"account_number":0,"balance":16623,"firstname":"Bradshaw","lastname":"Mckenzie","age":29,"gender":"F","address":"244 Columbus Place","employer":"Euron","email":"bradshawmckenzie@euron.com","city":"Hobucken","state":"CO"}
+        }, {
+          "_index" : "bank",
+          "_type" : "_doc",
+          "_id" : "1",
+          "sort": [1],
+          "_score" : null,
+          "_source" : {"account_number":1,"balance":39225,"firstname":"Amber","lastname":"Duke","age":32,"gender":"M","address":"880 Holmes Lane","employer":"Pyrami","email":"amberduke@pyrami.com","city":"Brogan","state":"IL"}
+        }, ...
+        ]
+      }
+    } 
+
+    As for the response, we see the following parts:
+    took - time in milliseconds for Elasticsearch to execute the search
+    time_out - tells us if the search timed out or not
+     

@@ -1,0 +1,13 @@
+REST - Representaional State Transfer(表现层状态转移)
+
+Author: Roy Fielding 
+Time: 2000 
+Place: University of California, Lrvine
+Paper: Architectural Styles and the Design fo Network-based Software Architectures
+
+Constraints
+	Server Client
+	Hierarchical(层次化)
+	Stateless(无状态)
+	Caching
+	Unified Interface

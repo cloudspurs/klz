@@ -1,0 +1,9 @@
+1. on remote server
+	mkdir ***.git
+	git init --bare
+
+2. on your local folder
+	git init
+	git add & git commit
+	git remote add origin "ssh://username@ip/**.git"
+	git push -u origin master
