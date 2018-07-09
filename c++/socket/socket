@@ -1,0 +1,36 @@
+SOCKET
+
+NAME
+	socket - create an endpoint for communication
+
+SYNOPSIS
+	
+
+CONCEPTION
+	在TCP/IP协议中，“IP地址+TCP或UDP端口号”唯一标识网络通讯中的一个进程，“IP地址+端口号”就称为socket。
+
+　　在TCP协议中，建立连接的两个进程各自有一个socket来标识，那么这两个socket组成的socket pair就唯一标识一个连接。
+	socket本身有“插座”的意思，因此用来描述网络连接的一对一关系。
+
+　　TCP/IP协议最早在BSD UNIX上实现，为TCP/IP协议设计的应用层编程接口称为socketAPI。
+
+　　本章的主要内容是socket API，主要介绍TCP协议的函数接口，最后介绍UDP协议和UNIXDomain Socket的函数接口。	
+
+Basic Knowledge
+	网络字节序
+		TCP/IP协议规定，网络数据流应采用大端字节序，即低地址高字节。
+		如果主机是大端字节序的，发送和接收都不需要做转换。
+		如果主机是小端字节序的，发送和接收都需要做转换。
+
+		可以调用以下库函数做网络字节序和主机字节序的转换。
+		#include <arpa/inet.h>
+		uint32_t htonl(uint32_t hostlong);
+		uint16_t htons(uint16_t hostshort);
+		uint32_t ntohl(uint32_t netlong);
+		uint16_t ntohs(uint16_t netshort);
+		h表示host，n表示network，l表示32位长整数，s表示16位短整数。
+		如果主机是小端字节序，这些函数将参数做相应的大小端转换然后返回，如果主机是大端字节序，这些函数不做转换，将参数原封不动地返回。
+
+
+Reference Material
+	https://www.cnblogs.com/rainbow1122/p/7852570.html
