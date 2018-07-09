@@ -1,1 +1,141 @@
-solr
+Solr
+
+Index the Techproducts Data
+    ./bin/post -c techproducts example/exampledocs/*
+
+Basic Searching
+    Solr can be queried via REST clients, curl, wget, Chrome POSTMAN, etc., as well as via
+    native clients available for many programming languages.
+
+    curl "http://localhost:8983/solr/techproducts/select?indent=on&q=*:*"
+
+    What's happening here is that we are using Solr's query parameter (q) with a special
+    syntax that requests all documents in the index (*:*).
+
+Search for a Single Term
+    curl "http://localhost:8983/solr/techproducts/select?q=foundation"
+
+    {
+        "responseHeader":{
+            "zkConnected":true,
+            "status":0,
+            "QTime":8,
+            "params":{"q":"foundation"}
+        },
+        "response":{
+            "numFound":4,
+            "start":0,
+            "maxScore":2.7879646,
+            "docs":[{
+                "id":"0553293354",
+                "cat":["book"],
+                "name":"Foundation",
+                "price":7.99,
+                "price_c":"7.99,USD",
+                "inStock":true,
+                "author":"Isaac Asimov",
+                "author_s":"Isaac Asimov",
+                "series_t":"Foundation Novels",
+                "sequence_i":1,
+                "genre_s":"scifi",
+                "_version_":1574100232473411586,
+                "price_c____l_ns":799
+            }]
+        }
+    }
+
+    The response indicates that there are 4 hits("numFound":4).
+
+    You can use the fl param to restrict the fields in the response.
+        curl "http://lcoalhost:8983/solr/techproducts/select?q=foundation&fl=id"
+
+Field Searches
+    curl "http://localhost:8983/solr/techproducts/select?q=cat:electronics"
+
+Phrase Search
+    Search for "CAS latency" by entering that phrase in quotes to q box in the Admin UI.
+    Note that the space between terms must be converted to "+".
+        curl "http://localhost:8983/solr/techproducts/select?q=\"CAS+latency\""
+    
+
+Combining Searches
+
+
+Modify the Schema and Index Films Data
+
+Create New Collection
+    ./bin/solr create -c films -s 2 -rf 2
+
+Preparing Schemaless for the Films Data
+
+Create the "names" Field
+
+    curl -X POST -H 'Content-type:application/json' --data-binary '{"add-field": {"name":"name", 
+    "type":"text_general", "multiValued":false, "stored":true}}' http://localhost:8983/solr/films/schema
+
+Create a "catchall" Copy Field
+    curl -X POST -H 'Content-type:application/json' --data-binary '{"add-copy-field" : {"source":"*",
+    "dest":"_text_"}}' http://localhost:8983/solr/films/schema
+
+Faceting
+
+Field Facets
+    curl "http://localhost:8983/solr/films/select?q=*:*&rows=0&facet=true&facet.field=genre_str"
+    curl "http://localhost:8983/solr/films/select?q=*:*&rows=0&facet=true&facet.field=genre_str&facet.mincount=200"
+
+Range Facets
+    curl "http://localhost:8983/solr/films/select?q=*:*&rows=0&facet=true&facet.range=initial_release_date
+    &facet.range.start=NOW-20YEAR&facet.range.end=NOW&facet.range.gap=%2B1YEAR"
+
+Pivot Facets
+    curl "http://localhost:8983/solr/films/select?q=*:*&rows=0&facet=on&facet.pivot=genre_str,directed_by_str"
+
+
+Index Your Own Data
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
