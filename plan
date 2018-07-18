@@ -1,6 +1,7 @@
 ai
 
 algorithm
+    simalate anneal(模拟退火)
 
 os
 

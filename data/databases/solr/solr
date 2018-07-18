@@ -1,5 +1,8 @@
 Solr
 
+Launch Solr in SolrCloud Mode
+    ./bin/solr start -e cloud
+    
 Index the Techproducts Data
     ./bin/post -c techproducts example/exampledocs/*
 
@@ -46,7 +49,7 @@ Search for a Single Term
 
     The response indicates that there are 4 hits("numFound":4).
 
-    You can use the fl param to restrict the fields in the response.
+    You can use the [fl] param to restrict the fields in the response.
         curl "http://lcoalhost:8983/solr/techproducts/select?q=foundation&fl=id"
 
 Field Searches
@@ -94,48 +97,3 @@ Pivot Facets
 Index Your Own Data
 
     
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
