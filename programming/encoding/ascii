@@ -1,0 +1,8 @@
+ASCII - American Standard Code for Information Interchange - 美国信息交换标准代码
+
+Standard ASCII uses 7 bit binary to represent alphabetic & numbers.
+The highest bit is used as parity check.
+
+The first 32 codes are defined as control codes.
+
+

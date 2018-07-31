@@ -1,3 +1,43 @@
+Searching
+
 Overview of Searching in Solr
 
- 
+Solr search query is processed by a request handler. A request handler is a Solr
+plug-in that defines the logic to be used when Solr processes a request.
+
+Solr calls query parser(request handler) interprets the terms and parameters of a query.
+
+Query Parsers
+    Standard Query Parser: just the 'lucene" query parsr
+    DisMax: much more tolerant of errors, to provide an experiences similar to search engines such as Google.
+    Extended DisMax: Is an improved version of DisMax.
+
+Query Parser can include:
+    search strings: that is, terms to search for in the index.
+    parameters for fine-tuning the query.
+    parameters for controlling the presentation of the query response.
+
+Filter Query
+    A filter query runs a query against the entire index and caches the results.
+    Solr allocates a searate cache for filter queries.
+
+Highlighting
+
+Snippets(摘要)
+
+Grouping Search Results
+    faceting and clustering
+
+Faceting
+    fAceting is the arrangement(排列) of search results into categories(which are based on indexed terms).
+
+Clustering
+    Clustering groups search results by similarities discovered when a search is executed,
+    rather than when content is indexed.
+
+MoreListThis
+    MoreLikeThis queries can make use of faceting or clustering to provide additional aid to users.
+
+Relevance
+    Relevance is the degree to which a query response statisfies a user who is searching for information.
+     
