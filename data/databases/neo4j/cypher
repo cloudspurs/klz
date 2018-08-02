@@ -1,0 +1,57 @@
+Cypher - Neo4j's query language
+
+
+Get Started With Cypher
+
+
+Patterns
+
+A simple pattern which has only a single relationshi, connects a pair of nodes.
+Occasionally, a node to itself.
+
+For example, we might want to match instances where a Person LIVES_IN a Country.
+
+    (:Person) -[:LIVES_IN]-> (:City) -[:PART_OF]-> (:Country)
+
+
+Node syntax
+
+Cypher uses a pair of parentheses(usually containing a text string) to represent
+a node, eg: (), (foo).
+
+The simple form, (), represents an anonymous, uncharacterized node.
+
+(:Movie)
+The [Movie] label(prefixed with an colon) declares the node's type.
+
+(matrix:Movie {title: "The Matirx"})
+The node's properties, for example [title], are represented as a list of key/value pairs,
+enclosed within a pair of braces.
+
+
+Relationship syntax
+
+Cypher uses a pair of dash(--) to represent an undirected realtionship.
+Directed relationships have an arrowhead at one end(<--, -->).
+
+Bracketed expressions([...]) can be used to add details.
+
+
+Pattern syntax
+
+
+Pattern variables
+
+Clauses
+
+
+Structure
+
+Cypher borrows its structure form SQL -- queries are built up suing various clauses.
+Clauses are chained together, and they feed intermediate result sets between each other.
+
+Here are a few clauses used to read from the graph:
+    MATCH: 
+    wHERE:
+    RETURN:
+

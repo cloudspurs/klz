@@ -1,0 +1,86 @@
+Graph Database Concepts
+
+The Neo4j graph is based on the property graph model.
+[https://github.com/opencypher/openCypher/blob/master/docs/property-graph-model.adoc]
+
+
+Nodes
+
+A node in Neo4j is a node as described in the property graph mode, with lables and properties.
+Nodes are often used to represent entities.
+
+
+Relationships
+
+A relationship with a relationship type and properties.
+
+Relationships between nodes are key feature of graph databases,
+as they allow for finding related data. A relationship connects
+two nodes, and is guaranteed to have a valid source and target node.
+
+While relationship always have a direction.
+
+A node can have relationships to itself as well.
+
+
+Properties
+
+Both nodes and relationships may have properties.
+
+Properties are named values where the name is a string.
+The supported property values are: 
+    Numeric values
+    String values
+    Boolean Values
+    Lists of any of the above values
+
+boolean binary logic value true/false
+integer 64-bit integer
+float 64bit IEEE floating-pint number
+String sequence of Unicode characters infinite
+
+
+Labels
+
+Labels assign roles or types to nodes.
+
+A label is a named graph construct that is used to group nodes into sets;
+all nodes labeled with the same label belongs to the same set.
+Many database queries can work with these sets instead of the whole graph,
+making queries easier to write and more efficient to execute.
+
+A node may be labeled with any number of labels.
+
+Labels are used when defining constraints and adding indexes for properties.
+
+Label names
+Any non-empty Unicode string can be used as a label name.
+By convention, labels are written with CamelCase notation.
+
+Labels have a id space of an int, meaning the maximum number of lables
+the database can contain is roughly 2 billion.
+
+
+Traversal
+
+A traversal navigates through a graph to find paths.
+
+
+Paths
+
+Paths are retrieved from a Cypher query or traversal.
+
+
+Schema
+
+Neo4j is a schema-optional graph database.
+
+Indexes
+
+Performance is gained by creating indexes, which improve the speed of looking up nodes in the database.
+
+Constraints
+
+Neo4j can help keep your data clean. Constraints allow you to specify the rules for what your data
+should look like.
+
