@@ -1,0 +1,17 @@
+MATCH
+
+The MATCH is used to search for the pattern described in it.
+
+
+Introduction
+
+    The MATCH clauses allows you to specify the patterns Neo4j will search for
+    in the database.
+
+    MATCH is often coupled to a WHERE part which adds restrictions, or predicates.
+
+    MATCH can occur at the beginning of the query or later, possibly after a WITH.
+
+
+
+

@@ -1,0 +1,1305 @@
+Cypher - Neo4j's query language
+
+https://neo4j.com/docs/developer-manual/3.3/
+
+
+Get Started With Cypher
+
+Patterns
+
+    A simple pattern which has only a single relationshi, connects a pair of nodes.
+    Occasionally, a node to itself.
+
+    For example, we might want to match instances where a Person LIVES_IN a Country.
+
+        (:Person) -[:LIVES_IN]-> (:City) -[:PART_OF]-> (:Country)
+
+
+Node syntax
+
+    Cypher uses a pair of parentheses(usually containing a text string) to represent
+    a node, eg: (), (foo).
+
+    The simple form, (), represents an anonymous, uncharacterized node.
+
+    (:Movie)
+    The [Movie] label(prefixed with an colon) declares the node's type.
+
+    (matrix:Movie {title: "The Matirx"})
+    The node's properties, for example [title], are represented as a list of key/value pairs,
+    enclosed within a pair of braces.
+
+
+Relationship syntax
+
+    Cypher uses a pair of dash(--) to represent an undirected realtionship.
+    Directed relationships have an arrowhead at one end(<--, -->).
+
+    Bracketed expressions([...]) can be used to add details.
+
+
+Pattern syntax
+
+
+Pattern variables
+
+Clauses
+
+
+
+
+Cypher
+
+Introduction
+
+Structure
+
+    Cypher borrows its structure form SQL -- queries are built up suing various clauses.
+    Clauses are chained together, and they feed intermediate result sets between each other.
+
+    Here are a few clauses used to read from the graph:
+        MATCH: The graph pattern to match. This is the most common way to get data from the graph.
+        WHERE:
+        RETURN:
+
+    And here are examples of clauses that are used to update the graph:
+        CREATE and DELETE: Create nodes and relationships.
+        SET and REMOVE: Set values to properties and add labels on nodes
+            using SET and use REMOVE to remove them.
+        MERGE: Match existing or create new nodes and patterns.
+            This is especially useful together with unique constraints.
+
+
+
+Querying and updating the graph
+
+    The structure of update queries
+
+    A Cypher query part can't both match and update the graph at the same time.
+    Every part can either read and match on the graph, or make updates on it.
+
+    In an updating query, the semantics are that all the reading will be done
+    before any writing actually happens.
+
+
+Returning data
+
+    Any query can return data. If you query only read, it has to return data.
+    Queries that update the graph don't have to return anything, but they can.
+
+    After all the parts of the query comes one final RETURN clause. RETURN is
+    not part of any query part -- it is a period symbol at the end of a query.
+    The RETURN clauses has three sub-clauses that comes with it: SKIP/LIMIT and ORDER BY.
+
+    If you return graph elements from a query that has just deleted them -- beware,
+    you are holding a pointer that is no longer valid. Opetatoins on that node
+    are undefined.
+
+
+
+
+Transactions
+
+    Any query that updates the graph will run in a transaction. An updating query
+    will always either fully succeed, or not succeed at all.
+
+    Cypher will either create a new transaction or run inside an existing one.
+
+
+
+Uniqueness
+
+    While pattern matching, Neo4j makes sure to not include matches where the
+    same graph relationship if found multiple times in a single pattern.
+
+
+
+
+
+Syntax
+
+Values and types
+    Property types
+    Structural types
+    Composite types
+
+
+
+Property types
+    Can be returned from Cypher queries
+    Can be used as parameters
+    Can be stored as properties
+    can be constructed with Cypher literals
+
+Property types comprise:
+    Number
+        Integer
+        Float
+    String
+    Boolean
+
+
+Structural types
+
+    Nodes, comprising:
+        Id
+        Label(s)
+        Map (of properties)
+
+    Relationships, comprising:
+        Id
+        Type
+        Map (of properties)
+        Id of the start and end nodes
+
+    Paths
+        An alternating sequence of nodes and relationships.
+
+
+Composite types
+    
+    Lists: are heterogeneous, ordered collections of values, each of which
+        has any property, structural or comprosite type.
+    Maps: are heterogeneous, unordered collections of (key, value) pairs, where:
+        the key is string
+        the value has any property, structural or composite type
+    
+
+
+
+
+Naming rules and recommendations
+
+Naming rules
+    Must begin with an alphabetic letter.
+    Can contain numbers, but not as the first character.
+    Cannot contain symbols.
+        An exception to this rule is underscore, as giben by my_variable.
+        An ostensible exception to this rule is using $ as the first character to denote a parameter,
+        as given by $myParam.
+    Can be very long, up to 65535(2^16 - 1)
+    Are case-sensitive.
+    Whitespace characters.
+        Leading and trailing whitespace characters will be removed automatically.
+        If spaces are required within a name, use backticks for escaping.
+
+Scoping(作用域) and namespaces rules
+
+    Nodes labels, relationship types and property names may re-use names.
+        The following query -- with a for the label, type and property name -- is valid,
+        CREATE (a:a {a: 'a'}) - [r:a] -> (b:a {a: 'a'}).
+
+    Variables for nodes and relationships must not re-use names within the same query scope.
+        The following query is not valid as the node and relationship both have the name a: CREATE (a)-[a]→(b).  
+
+
+
+Expressions
+    
+Expressions in general
+
+An expresion in Cypher can be:
+   A decimal literal, integer or double.
+   A hexadecimal integer literal, starting with 0x.
+   An octal integer literal, starting with 0.
+   A string literal.
+   A boolean literal.
+   A variable.
+   A property.
+   A dynamic property.
+   A parameter.
+   A list of expressions.
+   A function call.
+   An aggregate function.
+   A path-pattern.
+   An operator function.
+   A predicate expression is an expression that returns true or false.
+   A regular expression.
+   A case-sensitive string matching expression.
+   A [CASE] expression.
+
+
+Note on string literals
+
+    String literals can contain the following escape sequenses:
+        \t  tab
+        \b  backspace
+        \n  newline
+        \r  carriage return
+        \f  form feed
+        \'  single quote
+        \"  double quote
+        \\  backslash
+        \uxxxx unicode uft-16 code point 4 hex digits must follow the \u.
+        \Uxxxxxxx unicode utf-32 code point 8 hes digits must follow the \u.
+
+
+CASE expressons
+    Simple CASE form, which allows an expression to be compared against multiple values.
+        Syntax:
+            case test
+            when value then result
+            when ...
+            else default
+            end
+
+        Query：
+            match(n)
+            return
+            case n.eyes
+            when 'blue' then 1
+            wehen 'brown' then 2
+            else 3
+            end
+            ad result
+    
+    Generic form, which allows multiple conditional statements to be expressed.
+        Syntax:
+            case
+            when predicate then result
+            when ...
+            else default
+            end
+
+        Query:
+            match(n)
+            return
+            case
+            when n.eyes = 'bule' then 1
+            when n.age < 40 then 2
+            else 3
+            end
+            as result
+
+
+Variables
+    When you reference parts of pattern or a query, you do so by naming them.
+    The names you give the different parts are called variables.
+
+    In this example:
+        MATCH (n) --> (b)
+        RETURN b
+
+    The variables are n and b.
+
+    Variables are only visible in the same query part.
+
+    Variables are not carried over to subsequent queries. If multiple query parts
+    are chained together suing WITH, variables have to be listed in the WITH clause
+    to be carried over to the next part.
+
+
+
+Reserved keywords
+
+    The reserved words are not permitted to be used as identifier in the following contexts:
+        Variables
+        Function names
+        Parameters
+
+    If any reserved keyword is escaped by backticks `, such as `AND`, it would become
+    a valid identifier in the above contexts.
+
+
+    Clauses, Subclauses, Modifiers, Expressions, Operators, Schema, Hints, Literals
+
+    Reserver for future use
+
+
+
+
+Parameters
+
+Introduction
+
+    Cypher supports querying with parameters.
+
+    Parameters can be used for:
+        literals and expressions
+        node and relationship ids
+        for explicit indexes only: index values and queries
+
+    Parameters cannot be used for the following constructs:
+        property keys
+        relationship types
+        labels
+
+    Paramaters may consist of letters and numbers, and any combination of these,
+    but cannot start with a number or a currency(货币) symbol.
+
+    Parameters are given in JSON.
+
+    String literal
+
+        Parameters:
+            { "name": "Johan" }
+            
+        Query:
+            match(n:Person)
+            where n.name = $name
+            return n
+
+            match(n:person { name: $name} )
+            return n
+
+    Regular expression
+
+        { "regex": ".*h.*" }
+
+        match(n:Person)
+        where n.name =~ $regex
+        return n.name
+
+    Case-sensitive string pattern matching
+        
+        { "name": "Michael" }
+
+        match(n:Person)
+        where n.name starts with $name
+        return n.name
+
+    Create node with properties
+
+        {
+            "props": {
+                "name": "Andres",
+                "position": "Developer"
+             }
+        }
+
+        create($props)
+
+    Create multiple nodes with properties
+        
+        {
+            "props": [
+                {
+                    "awesome": true,
+                    "name": "Andres",
+                    "position": "Developer"
+                },
+                {
+                    "children": 3,
+                    "name": "Michael",
+                    "position": "Developer"
+                }
+            ]
+        }
+        
+        unwind $props as properties
+        create(n:Person)
+        set n = properties
+        return n
+
+
+    Setting all properties on a node
+
+        {
+          "props" : {
+            "name" : "Andres",
+            "position" : "Developer"
+          }
+        }
+
+        match(n:Person)
+        where n.name = 'Michaela'
+        set n = $props
+
+
+    SKIP and LIMIT
+        
+        {
+            "s": 1,
+            "l": 1
+        }
+
+        match(n:Person)
+        return n.name
+        skip $s
+        limit $l
+
+    Node id
+
+        {
+            "id": 0
+        }
+
+        match(n)
+        where id(n) = $id
+        return n.name
+
+    Multiple node ids
+
+        { "ids": [0, 1, 2] }
+
+        match(n)
+        where id(n) in $ids
+        return n.name
+
+    Calling procedures
+
+        { "indexname": ":Person(name)"
+
+        call db.resampleIndex($indexname)
+
+    Index value (explicit indexes)
+        
+        { "value": "Michaela" }
+
+        start n = node:people(name = $value)
+        return n
+
+    Index query (explicit indexes)
+
+        { "query": "name:Andreas" }
+
+        start n=node:people($query)
+        return n
+
+
+
+
+Operators
+
+Operators at a glance
+
+General operators
+    DISTINCT, . for property access, [] for dynamic property access
+
+Mathematical operators
+    +, -, *, /, %, ^
+
+Comparison operators
+    =, <>, <, >, <=, >=, IS NULL, IS NOT NULL
+
+String-specific comparison operators
+    STARTS WITH, ENDS WITH, CONTAINS
+
+Boolean operators
+    AND, OR, XOR, NOT
+
+String operators
+    + for concatenation, =~ for regex matching
+
+List operators
+    + for concatenation, IN to check existence of an element in a list, [] for accessing element(s)
+
+General operators
+
+    The general operators comprise:
+        remove duplicates value: DISTINCT
+        access the property of a node, relationship or literal map using the dot operator: .
+        dynamic property access using the subscript operator: []
+
+        CREATE (a:Person { name: 'Anne', eyeColor: 'blue' }),(b:Person { name: 'Bill', eyeColor: 'brown' }),(c:Person { name: 'Carol', eyeColor: 'blue' })
+        WITH [a, b, c] AS ps
+        UNWIND ps AS p
+        RETURN DISTINCT p.eyeColo
+
+        WITH { person: { name: 'Anne', age: 25 }} AS p
+        RETURN p.person.name
+
+        CREATE (a:Restaurant { name: 'Hungry Jo', rating_hygiene: 10, rating_food: 7 }),(b:Restaurant { name: 'Buttercup Tea Rooms', rating_hygiene: 5, rating_food: 6 }),(c1:Category { name: 'hygiene' }),(c2:Category { name: 'food' })
+        WITH a, b, c1, c2
+        MATCH (restaurant:Restaurant),(category:Category)
+        WHERE restaurant["rating_" + category.name]> 6
+        RETURN DISTINCT restaurant.name
+
+
+Mathematical operators
+    +, -, *, /, %, ^
+
+
+Comparison operators
+    =, <>, <, >, <=, >=, IS NULL, IS NOT NULL
+
+    String-specific comparison operators comprise:
+        STARTS WITH
+        ENDS WITH
+        CONTAINS
+
+
+Boolean operators
+    AND, OR, XOR, NOT
+    
+
+String operators
+    +: concatenating strings
+    =~: matching a regular expression
+
+
+List operators
+    +
+    IN
+    []
+
+
+Property operators
+    Missing properties are now returned as null.
+
+
+Equality and comparison of values
+
+    Cypher supports comparing values by equality using = and <> operators.
+
+    Vaules of the same type are only equal if they are the same identical value(e.g. 3 = 3 and "x" <> "xy").
+
+    Maps are only equal if they map exactly the same key to equal values.
+
+    List are only equal if they contain the same sequence fo equal values (e.g. [3, 4] = [1+2, 8/2]).
+
+    Values of different types are considered as equalaccording to the following rules:
+        Paths are treated as lists of alternating nodes and relationships and are
+        equal to all lists that contain that very same sequence of nodes and relationships.
+
+        Testing any value against with both the = and the <> operators always is null.
+        This includes null = null and null <> null. The only way to reliably test if
+        a value v is null is by suing the special v IS NULL, or v IS NOT NULL equality operators.
+
+    All other combinations of types of values cannot be compared with each other.
+    Especially, nodes, relationships and literal maps are incomparable with each other.
+
+    It is an error to compare values that cannot be compared.
+
+
+Ordering and comparison of values
+    The special value java.lang.Double.NaN is regarded as being larger than all other numbers.
+    Boolean values are compared for ordering such that false < true.
+    Comparing for order when one argument is null （e.g. null < 3 is null).
+    It is error to compare other types of values with each other for ordering.
+    
+
+Chaining comparison operations
+
+    Comparisons can be chained arbitrarily(任意的).
+
+    Note that a op1 b op2 c does not imply any kind of comprison between a and c,
+    so that, e.g., x < y > z is perfectly legal (although perhaps not elegant(优雅的)).
+
+
+
+
+Comments
+    To add comments to your queries, use double slash(//).
+
+
+
+
+Patterns
+
+Introduction
+    Patterns and pattern-matching are at the very heart of Cypher.
+    So being effective with Cypher requires a good understanding of patterns.
+
+    Using patterns, you describe the shape of the data you're looking for.
+
+    The pattern describes the data using a form that is very similar to 
+    how one typically draws the shape of property graph data on a whiteboard:
+    usually s circles (representing nodes) and arrows between them to represent relationships.
+
+    Patterns appear in multiple places in Cypher: in MATCH, CREATE, MERGE clauses,
+    and in pattern expression.
+
+
+Patterns for nodes
+    (a)
+
+
+Patterns for related nodes
+    (a)-->(b)
+
+    (a)-->(b)<--(c)
+
+    (a)-->()<--(c)
+
+
+Patterns for labels
+    (a:User)-->(b)
+
+    One can also describe a node that has multiple labels:
+    (a:User:Admin)-->(b)
+
+
+Specifying properties
+    (a {name: 'Andres', sport: 'Brazilian Ju-Jitsu'})
+
+    A relationship with expectations on it is given by:
+    (a)-[blocked: false]->(b)
+
+
+Patterns for relatonships
+    If you don't care about the direction of the relationship,
+    the arrow head can be omitted, as exemplified by:
+
+    (a)--(b)
+
+    As with nodes, relationships may also be given names.
+
+    (a)-[r]->(b)
+    
+    Much like labels on nodes, relationship can have types.
+    
+    (a)-[r:REL_TYPE]->(b)
+
+    Unlike labels, relationships can only have one type.
+
+    (a)-[r:TYPE1|TYPE2]->(b)
+
+    As with nodes, the name of the relationship can always be omitted, as exemplified by:
+
+    (a)-[:REL_TYPE]->(b)
+
+
+Variable-length pattern matching
+    Rather than describing a long path using a sequence of many node
+    and relationship desciptions in a pattern, many relationships can 
+    be described by specifying a length in the realtionship description
+    of a pattern. For example:
+
+    (a)-[*2]->(b)
+
+    This is equivalent to:
+    (a)-->()-->(b)
+
+    A range of lengths can also specified: such relationship patterns
+    are called 'variable length realtionships'.
+
+    (a)-[*3..5]->(b)
+
+    (a)-[*3..]->(b)
+    
+
+    (a)-[*..5]->(b)
+
+
+    (a)-[*]->(b)
+
+Assigning to path variables
+
+    p = (a)-[*3..5]->(b)
+
+
+
+Lists
+
+Lists in general
+
+    return [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] as list
+
+    return range(0, 10)[3]      3
+
+    return range(0, 10)[-3]     8
+
+    return range(0, 10)[0..3]   [0, 1, 2]
+
+    return range(0, 10)[0..-3]  [0, 1, 2, 3]
+
+    return range(0, 10)[-5..]   [6, 7, 8, 9, 10]
+
+    return range(0, 10)[..4]    [0, 1, 2, 3]
+
+    return range(0, 10)[15]     null
+
+    
+List comprehension
+
+    List comprehension is a syntactic construct available for creating a list based on existing lists.
+
+    RETURN [x IN range(0,10) WHERE x % 2 = 0 | x^3] AS result
+    [0.0,8.0,64.0,216.0,512.0,1000.0]
+
+    RETURN [x IN range(0,10) WHERE x % 2 = 0] AS result
+    [0,2,4,6,8,10]
+
+    RETURN [x IN range(0,10)| x^3] AS result
+    [0.0,1.0,8.0,27.0,64.0,125.0,216.0,343.0,512.0,729.0,1000.0]
+
+
+Pattern comprehension
+
+    Pattern comprehension is a syntactic construct available in Cypher for
+    creating a list based on matching of a pattern.
+
+    MATCH (a:Person { name: 'Charlie Sheen' })
+    RETURN [(a)-->(b) WHERE b:Movie | b.year] AS years
+    [1997, 1984, 1987]
+
+    The whole predicate, including the WHERE keywords, is optional and may be omitted.
+
+
+
+Maps
+
+Literal maps
+    From Cypher, you can also construct maps. Through REST you will get JSON objects;
+    in Java they will be java.util.Map<String, Object>.
+
+    RETURN { key: 'Value', listKey: [{ inner: 'Map1' }, { inner: 'Map2' }]}
+
+    {listKey -> [{inner -> "Map1"},{inner -> "Map2"}], key -> "Value"}
+
+
+Map projection
+    It allows for easily constructing map projections from nodes, relationships and other map values.
+
+    A map projection begins with the variable bound to the graph entity to be projected from,
+    and contains a body of comma-separated map elements, enclosed by { and }.
+
+    map_variable {map_element, [, ...n]}
+
+    A map element projects one or more key-value pairs to the map projection.
+    There exist four different types of map projection elements:
+        Property selector
+        Literal entry
+        Variable seletor
+        All-properties selector
+
+    Note that if the map_variable points to a null value, the whole map
+    projection will evaluate to null.
+
+    Examples of map projections
+
+    MATCH (actor:Person { name: 'Charlie Sheen' })-[:ACTED_IN]->(movie:Movie)
+    RETURN actor { .name, .realName, movies: collect(movie { .title, .year })}
+
+    {name -> "Charlie Sheen", movies -> [{title -> "Apocalypse Now", year -> 1979},{title -> "Red Dawn", year -> 1984},{title -> "Wall Street", year -> 1987}], realName -> "Carlos Irwin Estévez"}
+    
+    MATCH (actor:Person)-[:ACTED_IN]->(movie:Movie)
+    WITH actor, count(movie) AS nrOfMovies
+    RETURN actor { .name, nrOfMovies }
+
+    {name -> "Martin Sheen", nrOfMovies -> 2}
+    {name -> "Charlie Sheen", nrOfMovies -> 3}
+
+    If this property does not exist on the node, a null value is projected instead.
+
+    MATCH (actor:Person { name: 'Charlie Sheen' })
+    RETURN actor { .*, .age }
+
+    {name -> "Charlie Sheen", realName -> "Carlos Irwin Estévez", age -> <null>}
+
+
+
+Working with null
+
+Introduction to null in Cypher
+
+    In Cypher, null is used to represent missing or undefined values.
+    Conceptually, null means 'a missing unknown value' and it is treated
+    somewhat differently from other values.
+
+    null is not equal to null, null = null yields null and not true.
+
+
+Logical operations with null
+
+    The logical operators treat null as the 'unknown' value of three-valued logic.
+
+
+The in operator and null
+
+    If Cypher knows that something exists in a list, the result will be true.
+    Any list contains a null and doesn't have a matching element will return null.
+    Otherwise, the result will be false.
+
+
+The [] operator and null
+
+    Accessing a list or a map with null will return null.
+
+
+Expression that return null
+
+    Getting a missing element from a list: [][0], head([]).
+    Trying to access a property that does not exit on a node or relationship: n.missingProperty.
+    Comparisons when either side is null: 1 < null.
+    Arithmetic expressions containing null: 1 + null.
+    Function calls where any arguments are null: sin(null).
+
+
+
+
+
+Clauses
+
+Reading clauses
+
+    These comprise clauses that read data from the database.
+
+    The flow of data within a Cypher query is an unordered sequence fo maps
+    with key-value pairs -- a set of possible bindings between the variables
+    int the query and values derived from the database.
+
+    MATCH: Specify the patterns to search for in the database.
+    OPTIONAL MATCH: Specify the patterns to search for in the database
+        while using nulls for missing parts of the patterns.
+
+
+Projecting clauses
+
+    These comprise clauses that define which expressions to return in the result set.
+    The returned expressions may all be aliased using as.
+
+        RETURN ... AS: Defines what to include in the query result set.
+        WITH ... AS: Allows query part to be chained together, piping the results
+            from one to be used as starting points or criteria in the next.
+        UNWIND ... AS: Expands a list into a sequence of rows.
+
+
+Reading sub-clauses
+
+    These comprise sub-clauses that must operate as part of reading clauses.
+
+        WHERE
+        ORDER BY [ASC[ENDING] | DESC[ENDING]]
+        SKIP: Defines from which row to start including the rows in the output.
+        LIMIT: Constrains the number of rows in the output.
+
+
+Reading hints(提示)
+
+    These comprise clauses used to specify planner hints when tuning a query.
+
+        USING INDEX: Index hints are used to specify which idnex.
+        USING INDEX SEEK
+        USING SCAN: Scan hints are used to force the planner to do a label scan instead of using an index.
+        USING JOIN: Join hints are used to enforce a join operation at specified points.
+
+
+Writing clauses
+
+    These comprise clauses that write the data to the database.
+
+        CREATE: Create nodes and relationships.
+        DELETE: Delete graph elements -- nodes, relationships or paths. Any node to be
+            deleted must also have all associated relationships explicitly deleted.
+        DETACH DELETE: Delete a node or set of nodes. All associated relationships will
+            automatically be deleted.
+        SET: Update labels on nodes and properties on nodes and relationships. 
+        REMOVE: Remove properties and labels from nodes and relationships.
+        FOREACH: Update data within a list, whether components of a path or the result
+            of aggregation.
+
+
+Reading/Writing clauses
+
+    These comprise clauses that both read data from and write data to the database.
+
+        MERGE: Ensures that a pattern exists in the graph. Either the pattern already exists,
+            or it needs to be created.
+        --- ON CREATE: Used in conjunction with MERGE, this write sub-clause specifies the
+            actions to take if the pattern needs to be created.
+        --- ON MATCH: Used in conjunction with MERGE，this write sub-clause specifies the
+            actions to take if the pattern already exists.
+        CALL [...YIELD]: Invoked a procedure deployed in the database and return any results.
+
+
+Set operations
+
+    UNION: Combines the result of multiple queries into a single result set. Duplicated are removed.
+    UNION ALL: Combines the result of multiple queries into a single result set. Duplicated are retained.
+
+
+Importing data
+
+    LOAD CSV: Use when importing data from CSV files.
+    --- USING PERIODIC COMMIT: This query hint may be used to prevent an out-of-memory error
+        from occurring when importing large amounts of data using LOAD CSV.
+
+
+Schema clauses
+    
+    CREATE | DROP CONSTRAINT: Create or drop a constraint pertaining to either a node label or
+        relationship type, and a property.
+    CREATE | DROP IDNEX: Create or drop an index on all nodes with a particualr label and property.
+
+
+
+
+
+Functions
+
+    This section contains information on all functions in the Cypher query language.
+    Most functions in Cypher will return null if an input parameter is null.
+
+
+Predicate functions
+
+    These functions return either true or false for the given arguments.
+        all()
+        any()
+        exists()
+        none()
+        single()
+
+
+Scalar(标量) functions
+
+    These functions return a single value.
+
+
+Aggregating functions
+
+    These functions take multiple values as arguments, and calculate and return an
+    aggregated value from them.
+
+        sum()
+        avg()
+        collect()
+        count()
+        max()
+        min()
+        percentileCont()
+        percnetileDisc()
+        stDev()
+        stdevP()
+
+
+List functons
+
+
+Mathematical functions - numeric
+
+
+Mathematical functions - logarithmic
+
+
+Mathematical functions - trigonometric
+
+
+String functions
+
+
+Spatial(空间) functions
+
+    The functions are uesd to specify in a 2D coordinate system and to calcualte
+    the geodesic distance between two points.
+        distance()
+        point() - cartesian 2D
+        point() - WSG 84
+
+
+
+
+
+Schema
+
+    This section explains how to work an optional schema in Neo4j in the Cypher query language.
+
+    Neo4j 2.0 introduced an optional schema for the graph, based around the concept of labels.
+    Labels are uesd in the specification of indexes, and for definiting constraints on the graph.
+    Together, idnexes and constraints are the schema of the graph. Cypher includes data definiton
+    langugae(DDL) statements for manipulating the schema.
+
+
+
+Indexes
+
+    This section explains how to work with indexes in Neo4j and Cypher.
+
+
+Introduction
+
+    A database index is a redundant copy of information in the database for the purpose of
+    making retrieving said data more efficient.
+
+    This comes at the cost of addditional storage space and slower writes, so deciding what
+    to index and what not to index is an important and often non-trivial task.
+
+    Cypher enables the creation of indexes on one or more properties for all nodes that have
+    a given label.
+
+    An index that is created on a single property for any given label is called 
+    a single-property index.
+    
+    An index that is created on more than one property for any given label si called
+    a composite index.
+
+    Once an index has been created, it will automatically be managed and kept up to date
+    by the database when the graph is changed. Neo4j will automatically pick up and start
+    using the index once it has been created and brought online.
+
+
+Create a single-property index
+
+    An index on a single property for all nodes that have a particular label can be created
+    with CREATE INDEX ON :Label(property). Noth that the index is not immediately avaliable,
+    but will be created in the background.
+
+
+Get a list of all indexes in the database
+    
+    Calling the built-in procedure db.indexes will list all the indexes in the database.
+
+    Call db.indexes
+
+
+Create a composite index
+
+    An index on multiple properties for all nodes that have a particular label,
+    composite index can be created with CREATE INDEX ON :Label(prop1, ..., propN).
+    Only nodes labeled with the specified label and which contain all the properties
+    in the index definition will be added to the index.
+
+    CREATE INDEX ON :Person(firstname, surname)
+
+
+Drop a single-property index
+
+    DROP INDEX ON :Person(firstname)
+
+
+Drop a composite index
+
+    DROP INDEX ON :Person(firstname, surname)
+    
+
+Use index
+    
+    There is usually no need to specify which indexes to use in a query, Cypher will
+    figure that out by itselt.
+
+    MATCH (person:Person { firstname: 'Andres' }0
+    RETURN person
+
+    MATCH (person:Person)
+    WHERE person.firstname = 'Andres'
+    RETURN person
+
+    MATCH (n:Person)
+    WHERE n.firstname = 'Bill' AND n.surname = 'Joheson'
+    RETURN N
+
+    Moreover, unlike single-property indexes, composite indexes currently do not support
+    queries containing the following types of predicates on properties in the index:
+        Existence: exists(n.prop)
+        Range: n.prop > value
+        STARTS WITH
+        ENDS WITH
+        CONTAINS
+
+    Single-property indexes are also automatically used for inequality(range) comparison of
+    an indexed property in the WHERE clause.
+
+    MATCH (person:Person)
+    WHERE person.firstname > '8'
+    RETURN person
+
+    MATCH (person:Person)
+    WHERE person.firstname IN ['Andres', 'Mark']
+    RETURN person
+
+    MATCH (person:Person)
+    WHERE person.firstname STARTS WITH 'And'
+    RETURN person
+
+    MATCH (p:Person)
+    WHERE exists(p.firstname)
+    RETURN p
+
+
+Use built-in procedures to manage and use explicit indexes
+
+    Explicit indexes are alternative data structures, in which a user can explicitly
+    maintain and seek data for nodes and relationships. These data structures are
+    special-purpose and the procedures are primarily provided for users who have
+    legacy deployments depending on such structures.
+
+
+
+Constraints
+
+    Neo4j helps enforce data integrity(完整) with the use of constraints.
+    Constrains can be applied to either nodes or relationships.
+    Unique node property constraints can be created, along with node and
+    relationship property existence constraints, and Node keys, which
+    guarantee both existence and uniqueness.
+    
+
+Introduction
+
+    Unique property constrains ensure that property values are unique for
+    all nodes with a specific label. Unique constraints do not mean that
+    all nodes have to have a unique value for the properties -- ndoes
+    without the property are not subject to this rule.
+
+    Property existence constraints ensure that a property exists for all
+    nodes with a specific label or for all relationships with a specific
+    type. All queries that try to create new nodes or relationships without
+    the property, or queries that try to remove the mandatory property will
+    now fail.
+
+    Node Keys ensure that, for a given label and set of properties:
+        All the properties exist on all the nodes with that label.
+        The combination of the property values is unique.
+
+    Queries attemping to do any of the following will fail:
+        Create new nodes without all the properties or where the combination of property
+            avalue is not unique.
+        Remove one of the mandatory properties.
+        Update the properteis so that the combination of property values is no longer unique.
+
+
+Unique node property constraints
+    
+    To create a constraint that makes sure that your database will never contain more than
+    one node with a specific label and one property value.
+
+    CREATE CONSTRAINT ON (book:Book) ASSERT book.isbn IS UNIQUE
+    
+    DROP CONSTRAINT ON (book:Book) ASSERT book.isbn IS UNIQUE
+
+
+Get a list of all constraints in the database
+    
+    CALL db.contraints
+
+
+Node property existence constraints
+
+    CREATE CONSTRAINT ON (book:Book) ASSERT exists(book.isbn)
+
+    DROP CONSTRAINT ON (book:Book) ASSERT exists(book.isbn)
+
+
+Relationship property existence constraints
+
+    CREATE CONSTRAINT ON ()-[like:LIKED]-() ASSERT exists(like.day)
+
+    DROP CONSTRAINT ON ()-[like:LIKED]-() ASSERT exists(like.day)
+
+
+Nodes Keys
+
+    To create a Node Key ensuring that all nodes with a particular label have a set fo defined
+    properties whose conbined value is unique, and where all properties in the set are present.
+
+    CREATE CONSTRAINT ON (n:Person) ASSERT(n.firstname, n.surname) IS NODE KEY
+
+
+
+
+
+Query tuning
+    
+    Neo4j works very hard to execute queries as fast as possible.
+
+    The overall goal of manual query performance optimization is to ensure that only necessary
+    data is retrieved from the graph. At least data should get filtered out as early as possible
+    in order to reduce the amount of work that has to be done at later stages fo query execution.
+
+    Each Cypher query gets optimized and transformed into an execution plan by the Cypher execution engine.
+    *To minimize the resources used for this, make sure to use parameters instead of literals when possible.
+    This allows Cypher to re-use you queries instead of having to parse and build new execution plans.
+    
+
+
+Cypher query options
+
+Cypher version
+
+
+Cypher planner
+
+    Each queqy is turned into an execution plan by the execution palnner.
+
+    Neo4j uses a coast-based execution planning strategy: the statistics service in Neo4j
+    is uesd to assign a cost to alternative plans and picks the cheapest one.
+    
+
+Cypher runtime
+    
+    Interpreted
+
+    Slotted
+
+    Compiled
+
+
+
+Profiling a query
+
+    There are two options to choose from when you want to analyze a query by looking at its execution plan:
+        EXPLIAN
+            If you want to see the execution plan but not run the statement.
+        PROFILE
+            If you want to run the statement and see which operators are doing most of the work.
+
+
+Basic query tuning example
+
+
+
+Planner hints and the USING keywork
+
+    A planner hint is used to influence the decisions fo the planner of the planner when biulding an execution
+    for a query. Plnner hints are specified in a query with the USING keyword.
+
+
+Introduction
+
+    When executing a query, Neo4j needs to decide where in the quey graph to start matching.
+    This is done by looking at the MATCH clause and the WHERE conditions and using that information
+    to find useful indexes, or other starting points.
+
+    However, the selected index might not always be the best choice. Sometimes multiple indexes are possible
+    candidate, and the query planner picks the wrong one from a perfromance point of view.
+    Moreover, in some circumstances (albeit rately) it is better not to use an index at all.
+
+    Neo4j can be forced to use a specific starting point through the USING keyword. This is
+    called give a planner hint. There are four types of planner hints: index hints, scan hints,
+    join hints and the PERIODIC COMMIT query hint.
+
+    *You cannot use planner hints if your query has a START clause.
+
+
+Index hints
+
+    Index hints are used to specify which index, if any, the planner should use as a starting point.
+
+
+Scan hints
+
+    If your query matches large parts of an idex, it might be faster to scan the albel and filter out
+    nodes that do not match. This will force Cypher to not use an index that could have been used,
+    and instead do a label scan.
+
+    MATCH (s:Scientist)
+    USING SCAN s:Scientist
+    WHERE s.born < 1939
+    RETURN s.born AS column
+
+
+Join hints
+    
+    Join hints are the most advanced type of hints, and are not used to find starting points for
+    the query execution plan, but to enforce that joins are made at specified points.
+
+
+PERIODIC COMMIT query hint
+    
+    Importing large amounts of data using LOAD CSV with a single Cypher query may fail due to
+    memory constraints. For this situation only, Cypher provides the global USING PERIODIC COMMIT
+    to limit the number of rows per commit.
+
+    PERIODIC COMMIT will process the rows until the number of rows reaches a limit. Then the
+    current transaction will be committed and replaced with a newly opened transaction.
+    If no limit is set, a default value will be used.
+
+    However, it will also break tansactional isolation(隔离) and thus it should only be used
+    when needed.
+
+
+
+
+
+Execution plans
+
+    The task of executing a query id decomposed into operators, each of which implements a
+    single unit of work. The operators are combined into a structure called an execution plan.
+
+    Each operators is annotated with statistics.
+
+    Rows, EstimatedRows, DbHits.
+
+
