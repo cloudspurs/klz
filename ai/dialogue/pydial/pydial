@@ -1,0 +1,84 @@
+PyDial
+
+The Cambridge University Python Multi-domain Statistical Dialogue System Toolkit.
+
+PyDial is an open-source end-to-end statistical spoken dialogue system toolkit
+which provides implementations of statistical approaches for all dialogue system
+modules. Moreover, it has been extended to provide multi-domain conversational
+functionality. It offers easy configuration, easy extensibility, and domain-independent
+implementations of the respective dialogue system modules.
+
+
+
+Interacting with the system
+
+    To have a chat session run:
+
+    pydial chat config/Tut-hdc-CamInfo.cfg
+
+    where the configuration file specifies all the parameters needed to run the system.
+    Now you can get to know your favourite restaurant in Cambridge or book a room in some hotel.
+    An example of dialogue is shown below:
+
+    > pydial chat config/Tut-hdc-CamInfo.cfg
+    *** Chatting with policies ['CamRestaurants', 'CamHotels']: ***
+    Prompt > Hello, welcome to the Cambridge Multi- Domain dialogue system. How may I help you?.
+    User   > I want a cheap hotel in the centre of town.
+    Prompt > I am sorry but there is no place, is a hotel, in the cheap price range and in the area of centre.
+    User   > Ok, how about a moderately priced hotel?
+    Prompt > Cityroomz is a nice place, it is in the moderate price range , it is a hotel and it is in the centre of town.
+    User   > What is the phone number?
+    Prompt > Cityroomz is a nice place Their phone number is 01223304050.
+    User   > I would also like a cheap chinese restaurant in the centre.
+    Prompt > Golden house is a nice place, it is in the centre of town, it is in the cheap price range and it serves chinese food.
+    User   > What is the address?
+    Prompt > Golden house is a nice place. Their address is 12 Lensfield Road, City Centre.
+    User   > Goodbye.
+    Prompt > Thank you, goodbye.he convesation is divided into turns.
+
+    The conversation is divided into turns. Each turn consists of a 'system act' which is converted to
+    a prompt by the generation module, followed by a user response which is converted to a 'user
+    dialogue act' by the semantic decoder. 
+
+    The first few lines of log file are shown below:
+
+        FlatOntologyManager.py <_set_ontology>126 :  Loading ontology: ontology/ontologies/CamRestaurants-rules.json
+           FlatOntologyManager.py <_set_db>141 :  Loading database: ontology/ontologies/CamRestaurants-dbase.db
+     FlatOntologyManager.py <_set_ontology>126 :  Loading ontology: ontology/ontologies/CamHotels-rules.json
+           FlatOntologyManager.py <_set_db>141 :  Loading database: ontology/ontologies/CamHotels-dbase.db
+                      pydial <chat_command>729 :  *** Chatting with policies ['CamRestaurants', 'CamHotels']: ***
+                   Agent.py <_hand_control>430 :  Launching Dialogue Manager for domain: topicmanager
+                      Agent.py <start_call>178 :  >> NEW DIALOGUE SESSION. Number: 1
+                   Agent.py <_hand_control>447 :  Domain topicmanager is both already running and has control
+                     Agent.py <_print_turn>554 :  ** Turn 0 **
+                  Agent.py <_print_sys_act>569 :  | Sys > hello()
+                    Agent.py <_agents_semo>653 :  Domain with CONTROL: topicmanager
+                     Agent.py <_print_turn>554 :  ** Turn 1 **
+        RuleTopicTrackers.py <infer_domain>151 :  CamHotels keyword found in: I want a cheap hotel in the centre of town.
+             TopicTracking.py <track_topic>136 :  TopicTracker switched domains. From topicmanager to CamHotels
+             TopicTracking.py <track_topic>142 :  After user_act - domain is now: CamHotels
+                   Agent.py <_hand_control>430 :  Launching Dialogue Manager for domain: CamHotels
+                           SemI.py <decode>195 :  [(inform(area=centre)|inform(kind=hotel)|inform(pricerange=cheap)|
+                                                  inform(type=placetostay)', 1.0)]
+         SemI.py <_add_context_to_user_act>254 :  Possibly adding context to user semi hyps: [(inform(area=centre)|inform(
+                                                  kind=hotel)|inform(pricerange=cheap)|inform(type=placetostay)', 1.0)]
+    ModSemBeliefTrack.p<update_belief_state>68 :  SemI   > [(inform(area=centre)|inform(kind=hotel)|
+                                                  inform(pricerange=cheap)|inform(type=placetostay)', 1.0)]
+                  Agent.py <_print_sys_act>569 :  | Sys > inform(name=none, kind='hotel',pricerange='cheap',area='centre')
+                    Agent.py <_agents_semo>653 :  Domain with CONTROL: CamHotels
+                     Agent.py <_print_turn>554 :  ** Turn 2 **
+    
+
+Training a policy
+
+    The basic system demonstrated above uses very simple hand-crafted coponents and rule-based
+    dialogue policies. PyDial provides basic functions for training and testing a policy and
+    analysing the results.
+
+    *The dialogue may be seen as a control problem where given a distribution over possible belief
+    states we need to take some action which determines what the system will do next. We can learn
+    a good policy for making these decisions by defining a reward function and then using reinforcement
+    learning to find a policy which maximises the total reward accumalated in each dialogue.
+    One algorithm for doing this is GP-SARSA.
+
+
