@@ -1,12 +1,12 @@
 PyDial
 
-The Cambridge University Python Multi-domain Statistical Dialogue System Toolkit.
+    The Cambridge University Python Multi-domain Statistical Dialogue System Toolkit.
 
-PyDial is an open-source end-to-end statistical spoken dialogue system toolkit
-which provides implementations of statistical approaches for all dialogue system
-modules. Moreover, it has been extended to provide multi-domain conversational
-functionality. It offers easy configuration, easy extensibility, and domain-independent
-implementations of the respective dialogue system modules.
+    PyDial is an open-source end-to-end statistical spoken dialogue system toolkit
+    which provides implementations of statistical approaches for all dialogue system
+    modules. Moreover, it has been extended to provide multi-domain conversational
+    functionality. It offers easy configuration, easy extensibility, and domain-independent
+    implementations of the respective dialogue system modules.
 
 
 
@@ -82,3 +82,5 @@ Training a policy
     One algorithm for doing this is GP-SARSA.
 
 
+The Configuration File
+    
