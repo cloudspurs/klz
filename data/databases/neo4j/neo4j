@@ -1,0 +1,9 @@
+Introduction
+
+Highlights
+
+A native graph database:
+    Neo4j is built from the around up to be a graph database.
+    Relationships traversal permance is linear.
+    The total amount of data stored in a database will not affect operations runtime.
+
