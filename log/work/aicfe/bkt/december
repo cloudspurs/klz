@@ -1,0 +1,6 @@
+1. bkt(hmm) is sensitivity to initial parameters?
+
+2. p_init need many sequences to estimate?
+
+3. pyBKT get bkt parameters from many sequences, then normalized.   
+
