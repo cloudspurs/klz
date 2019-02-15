@@ -1,0 +1,15 @@
+1. screen size(屏幕尺寸): the length of screen diagonal
+    inch: 1inch = 2.54cm
+
+2. resolution(分辨率): the number of screen pixel
+    for example: resolution 1920*1080
+        there are 1920 transverse pixels
+        there are 1080 vertical pixels
+
+    with the same screen size, higher resolution has more exquisite display
+    effect.
+
+3. dpi(dot per inch)
+    Google Nexus 5: 4.95 inch screen size, resolution 1920*1080
+    dpi: sqrt(1920*1920 + 1080*1080)/4.95 sprt: square root
+
