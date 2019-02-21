@@ -1,0 +1,80 @@
+insert sorting
+
+kind
+	direct insert souring
+	swap insert sorting
+	binary insert sorting(二分插入排序)
+	shell sorting
+
+method
+	Records to be sorted process one by one, each new record is compared with
+	sorted records and insert to correct location.
+
+	The key of insert sorting is how to insert a new record to the sorted sequence:
+		1. find the correct location to insert
+		2. how to move sorted records to insert new record
+
+Direct Insert Sorting
+
+	Direct Insert Sorting finds new record location by linear search(线性搜索).
+	If there are several records already sorted as undiminished sequence(不减序列),
+	then compare the sorted records with new record one by one in order from large to small,
+	until the first record no greater than the new record is found, this location
+	is the new record to be insert. Insert the new record to the sroted subsequence
+	until all records ared ordered.
+
+
+C++ Template
+	
+	template <class Record>
+	void InsertSort(Record Array[], int n) {	// n: Array length
+		Record TempRecord;
+		int i, j;
+		for(i = 1; i < n; i++) {	// from 1 to n-1
+			TempRecord = Array[i];
+			j = i-1;
+			while(j >= 0 && TempRecord < Array[j]) {
+				Array[j+1] = Array[j];
+				j = j-1;
+			}
+			Array[j+1] = TempRecord;
+		}
+	}
+
+Feature
+	Direct Insert Sorting is stable.
+	Space cost: O(1)
+	
+Time Cost
+	Direct Insert Sorting has two cycles. 
+
+	The outer cycle iterates n-1 times.
+
+	There are two temporary record movements at the beginning and end of the inner cycle. 
+	The iteration times depend on how many records before Array[i] greater than the Array[i].
+
+	Minimum Time Cost
+		When array are positively sequence. Inner cycle exits as soon as entering,
+		iterate 0 time, compare n-1 time, temperary record move(preservation保存 & backfill回填)
+		2(n-1) times. 
+		
+		The time cost is O(n) at best situation.
+
+	Maximum Time Cost
+		When array are inverted sequence(逆序).	At the i times outer cycle, inner cycle iterates i times,
+		compares i times, temporary record move 2 times, Array[0] -> Array[i-1] move i times,
+		move i+2 times in total.
+		
+		Total comparision times: SUM(i)[1, n-1] = n(n-1)/2 = O(nn)
+		Total movement times: SUM(i+2)[1, n-1] = n(n-1)/2 + 2(n-1) = (n-1)(n+4)/2 = O(nn)
+		
+		The time cost is O(nn) at worst situation.
+
+	Average Time Cost
+		Array[n] has n! permutation(排列), has n(n-1)/2 record pair,
+		has half (n(n-1)/4) inversion(逆置) on average.	
+		The number of inversion determines the number of moves.
+		So the average time cost equal to the number of inversion.
+
+		The Average Time Cost is O(nn).
+

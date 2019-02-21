@@ -8,4 +8,7 @@
 
 5. stable, unstable
 
-6. move, swap	one swap is three move
+6. time cost, space cost
+
+7. compare, move, swap(one swap = three move)
+
