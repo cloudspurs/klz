@@ -1,0 +1,33 @@
+Selecting Sorting
+
+
+Algorithm
+	Selecting sorting finds the i_th smallest(第i小) record, and put this record at Array[i].
+	
+	The key is how to finds the i_th smallest record from the remainning unsortted records.
+
+
+Direct Selecting Sorting
+	Direct Selecting Sorting finds the i_th record one by one, and swap this record with the Array[i].
+
+
+C++ Template
+	
+	template <class Record>
+	void SelectSort(Record Array[], int n) {
+		int i, j, Smalllest;
+		for(i = 0; i < n-1; i++) {
+			Smalllest = i;
+			for (j = i+1; j < n; j++)
+				if(Array[j] < Array[Smalllest])
+					Smalllest = j;
+			swap(Array, i, Smalllest);
+		}
+	}
+
+
+Feature
+	Unstable
+
+Space Cost
+	O(1): because of swap operation
