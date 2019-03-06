@@ -1,20 +1,20 @@
-Selecting Sorting
+Selection Sort
 
 
 Algorithm
-	Selecting sorting finds the i_th smallest(第i小) record, and put this record at Array[i].
+	Selection sort finds the i_th smallest(第i小) record, and put this record at Array[i].
 	
 	The key is how to finds the i_th smallest record from the remainning unsortted records.
 
 
-Direct Selecting Sorting
-	Direct Selecting Sorting finds the i_th record one by one, and swap this record with the Array[i].
+Direct Selection Sort
+	Direct Selection Sort finds the i_th record one by one, and swap this record with the Array[i].
 
 
 C++ Template
 	
 	template <class Record>
-	void SelectSort(Record Array[], int n) {
+	void SelectionSort(Record Array[], int n) {
 		int i, j, Smalllest;
 		for(i = 0; i < n-1; i++) {
 			Smalllest = i;
@@ -27,7 +27,17 @@ C++ Template
 
 
 Feature
-	Unstable
+	Unstable: cross-record movement
 
 Space Cost
 	O(1): because of swap operation
+
+Time Cost
+	Outer cycle iterates n-1 times, the i_th inner cycle iterates n-1-i times,
+	n-1-i comparison, 1 swap(3 movements). All movement: SUM(n-1-i)[0, n-2] = n(n-1)/2 = O(nn) 
+
+	The whole sort need maximum n-1 times swap. It suitable for small sequence large record,
+	move least times. 
+
+	Direct Selection Sort not depend on original array.
+	So Minimum Time Cost = Maximum Time Cost = Average time Cost = O(nn)

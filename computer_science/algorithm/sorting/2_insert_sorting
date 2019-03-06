@@ -5,16 +5,16 @@ Kind
 	direct insertion sort
 	binary insertion sort(二分插入排序): reduce the number of comparisons.
 	swap insertion sort
-	shell sort: 
+	shell sort: grouped insertion sort, avoid large shifts.
 
 
 Algorithm
-	Records sorted one by one, each new record is compared with
-	sorted records and insertion to correct location.
+	Records processed one by one, each new record is compared with
+	sorted records and insert to correct location.
 
-	The key of insertion sort is how to insertion a new record to the sorted sequence:
-		1. find the correct location to insertion a new record
-		2. how to move sorted records to insertion a new record
+	The key of insertion sort is how to insert a new record to the sorted sequence:
+		1. find the correct location to insert a new record
+		2. how to move sorted records to insert a new record
 
 
 Direct Insertion Sort
@@ -22,7 +22,7 @@ Direct Insertion Sort
 	If there are several records already sorted as undiminished sequence(不减序列),
 	then compare the sorted records with new record one by one in order from large to small,
 	until the first record no greater than the new record is found, this location
-	is the new record to be insertioned. Insertion the new record to the sroted subsequence
+	is the new record to inserted. Insert the new record to the sroted subsequence
 	until all records are ordered.
 
 
@@ -49,7 +49,7 @@ Feature
 
 
 Space Cost
-	O(1)
+	O(1): Temp Variable
 
 	
 Time Cost
@@ -58,10 +58,10 @@ Time Cost
 	The outer cycle iterates n-1 times.
 
 	There are two temporary record movements at the beginning and end of the inner cycle. 
-	The iteration times depend on how many records before Array[i](sort record) greater than the Array[i].
+	The iteration times depend on how many records before sorting record(Array[i]) greater than the Array[i].
 
 	Minimum Time Cost
-		When array are positively sequence. Inner cycle exits as soon as entering,
+		When the array are positively sequence. Inner cycle exits as soon as entering,
 		iterate 0 time, compare n-1 time, temperary record move(preservation保存 & backfill回填)
 		2(n-1) times. 
 		
@@ -69,7 +69,7 @@ Time Cost
 
 	Maximum Time Cost
 		When array are inverted sequence(逆序).	At the i times outer cycle, inner cycle iterates i times,
-		compares i times, temporary record move 2 times, Array[0] -> Array[i-1] move i times,
+		compares i times, temporary record move 2 times, sorted records(Array[0] -> Array[i-1]) move i times,
 		move i+2 times in total.
 		
 		Total comparision times: SUM(i)[1, n-1] = n(n-1)/2 = O(nn)
@@ -80,7 +80,7 @@ Time Cost
 	Average Time Cost
 		Array[n] has n! permutation(排列), has n(n-1)/2 record pair,
 		has half (n(n-1)/4) inversion(逆置) on average.	
-		The number of inversion determines the number of moves.
+		The number of inversion determines the number of movements.
 		So the average time cost equal to the number of inversion.
 
 		The Average Time Cost is O(nn).
