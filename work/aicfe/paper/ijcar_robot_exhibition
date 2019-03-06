@@ -1,0 +1,74 @@
+Section II Integrated Technologies on Robot
+
+For providing a more pleasurable learning experience and better motivate learners,
+SLP(Robot Name) integrates many AI technologies, such as emotion recognition,
+personalized knowledge graph, face recognition.
+
+Learners can enter the SLP robot sytem through face recognition technology based on
+the deep learning. With face recognition, user can login to the SLP conveniently
+and quickly without entering username and password.
+
+SLP can recognize learner's real-time emotion status from his or her facial
+expression (e.g., happiness, surprise and disgust)
+with the image-based multiple deep network learning through the camera.
+Using such emotion detection technology, SLP can provide a more appropriate
+real-time feedback for learners.
+
+SLP can provide a personalized knowledge graph for the individual learner.
+For each concept on the knowlege graph, the system automatically denotes
+different level of the knowledge proficiency using different color. 
+
+So, it can provide the personalized learner-robot interaction.
+
+***
+    Technologies: face recognition, emotion recognition, personalized knowledge graph.
+
+    Moreover, by leveraging on the foreground camera on SLP, an emotion recognition engine
+    is implemented to recognize learner's real-time emotion status from his or her facial
+    expression(e.g., happiness, surprise and disgust), where the image-based mutiple deep
+    network learning is uesd. Using such emotion detection results, we further enhance the
+    interactive module to provide a more appropriate real-time feedback for learners.
+    For example, when a learner keeps showing anegative emotions (e.g., disgust) during
+    the learning process, SLP may query about his or her current feeling or directly
+    suggest the learner have a rest to alleviate the pressure.
+
+    In the process of learning, a personalized knowledge graph can be automatically constructed 
+    for each individual learner, according to his or her personal assessment results and
+    the interaction data with the SLP. For each concept on the knowlege graph, the system
+    automatically denotes different level of the knowledge proficiency using different color 
+    for the individual learner.
+
+    Learners login in system using face recognition.
+***
+
+Section III Main Functionalities and Workflow
+
+The SLP robot has three main functionalities: Learn, Report and Casual Chatting.
+Example interactions can be seen in demo video at https://aic-fe.bnu.edu.cn/xwdt/xzsp/57270.html.
+
+For Learn and Report, it currently supports a number of subjects, including mathmatics,
+Chinese, English, history, geography, physics, biology and ideology.
+For each subject, a personalized knowledge graph can be automatically constructed for each individual learner,
+according to his or her personal assessment result and the interaction data with the robot.
+Students can select concept according to the knowledge proficiency denoted by the learner's
+assessment results.
+
+Moreover, SLP manages a large volume of learning resources. Several types of learning resources
+are currently available for each concept, including micro-lecture videos, quiz question, and 
+teaching handouts on the key concepts of each subject.
+
+Learners can view the report after learning or assessment to better know own learning situation.
+Learners can find comprehensive evaluation and concrete advantages and disadvantages of each subject.
+
+To provide a more interesting and nice interaction experience, a dedicated conversational agent (CA) 
+engine is designed to support casual chatting with learners. The designed CA used reinforcement learning
+model generate human like response during a conversation.
+
+***
+    Learners can select Learn, Report or Casual Chatting while entering the SLP system.
+
+    learn report chatting
+
+    select functionality -> select subjects -> select knowledge -> resource
+***
+
