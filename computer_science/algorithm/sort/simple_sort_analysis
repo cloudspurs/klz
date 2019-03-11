@@ -1,0 +1,15 @@
+1. Why insersion sort is quickest in three simple sort algorithm?
+	These three kinds sort algorithm average time cost is all O(nn),
+	why insertion sort is quickest?
+
+	Sort contain comparison, move, swap.
+		swap = 3move = 3comparison
+
+	Bubble Sort  needs all comparison and more than n swap.
+	Selection Sort needs all comparison, most n swap.
+	Insertion Sort not need all(average a half) comparison(until the first less or equal record),
+	and movement.
+					Comparison	Movement		Swap		All
+	Bubble Sort		n(n-1)/2					n(n-1)/4	3n(n-1)/4
+	Selection Sort	n(n-1)/2					n/2			n(n-1)/2 + 3n/2
+	Insertion Sort	n(n-1)/4	(n+4)(n-1)/4				n(n-1)/2 + n-1 
