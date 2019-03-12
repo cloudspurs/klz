@@ -1,74 +1,42 @@
+Section I Introduction
+    
+Different form the formal education robots that mainly provide standard courses and learning resources.
+Today's ecudation robot can provide intelligent and personalized learning experience to individual learners.
+With the developement of the AI techniques, especially natural language processing and emotion recognition,
+education robot industry significantly grows to satisfy the great demand for schools and families in the last few years.
+
+A variety of educational robots have emerged. Many educational robots has ben widely used 
+in STEM (Science, Technology, Engineering and Mathemativs) courses[6] to help students learning scientific knowledge and skills.
+
+In this paper, we introduce a novel robot, called smart learning partner (SLP).
+Different form most education robtos, SLP can provide a more pleasurable interactive experience during the learning process.
+Specifically, it provides the personalized learner-robot interaction by leveraging the AI technologies,
+typically including the emotion recognition, convesational agent and knoledge graph.
+
+
 Section II Integrated Technologies on Robot
 
-For providing a more pleasurable learning experience and better motivate learners,
-SLP(Robot Name) integrates many AI technologies, such as emotion recognition,
-personalized knowledge graph, face recognition.
+For providing a more pleasurable interaction experience and better motivate learners, SLP integrates several AI technologies, such as face recognition, emotion recognition, and personalized knowledge graph.
 
-Learners can enter the SLP robot sytem through face recognition technology based on
-the deep learning. With face recognition, user can login to the SLP conveniently
-and quickly without entering username and password.
+Learners can enter the SLP robot system through face recognition technology based on the deep learning. With face recognition, user can login to the SLP conveniently and quickly without entering username and password.
 
-SLP can recognize learner's real-time emotion status from his or her facial
-expression (e.g., happiness, surprise and disgust)
-with the image-based multiple deep network learning through the camera.
-Using such emotion detection technology, SLP can provide a more appropriate
-real-time feedback for learners.
+SLP can recognize learner's real-time emotion status from learners's facial expression (e.g., happiness, surprise and disgust) through the camera with the image-based multiple deep network learning technology. Using such emotion detection technology, SLP can provide a more appropriate real-time feedback for learners. For example, when a learner keeps showing disgust emotions after watching a video resource, SLP may ask the learner current feelings or directly play the video again.
 
-SLP can provide a personalized knowledge graph for the individual learner.
-For each concept on the knowlege graph, the system automatically denotes
-different level of the knowledge proficiency using different color. 
+SLP can provide a personalized knowledge graph for each individual learner. For each subject, SLP can automatically constructed a personalized knowledge graph for each individual learner, according to personal assessment results and the interaction data whit the robot. The system can automatically denotes different knowledge proficiency with different color for each concept on the personalized knowledge graph.
 
-So, it can provide the personalized learner-robot interaction.
-
-***
-    Technologies: face recognition, emotion recognition, personalized knowledge graph.
-
-    Moreover, by leveraging on the foreground camera on SLP, an emotion recognition engine
-    is implemented to recognize learner's real-time emotion status from his or her facial
-    expression(e.g., happiness, surprise and disgust), where the image-based mutiple deep
-    network learning is uesd. Using such emotion detection results, we further enhance the
-    interactive module to provide a more appropriate real-time feedback for learners.
-    For example, when a learner keeps showing anegative emotions (e.g., disgust) during
-    the learning process, SLP may query about his or her current feeling or directly
-    suggest the learner have a rest to alleviate the pressure.
-
-    In the process of learning, a personalized knowledge graph can be automatically constructed 
-    for each individual learner, according to his or her personal assessment results and
-    the interaction data with the SLP. For each concept on the knowlege graph, the system
-    automatically denotes different level of the knowledge proficiency using different color 
-    for the individual learner.
-
-    Learners login in system using face recognition.
-***
 
 Section III Main Functionalities and Workflow
 
-The SLP robot has three main functionalities: Learn, Report and Casual Chatting.
-Example interactions can be seen in demo video at https://aic-fe.bnu.edu.cn/xwdt/xzsp/57270.html.
+When entering the SLP robot system, learners can select learning, report viewing or casual chatting.
+For learning and report viewing module, learners can select a number of subjects, including mathematics, Chinese, English, history, geography, physics, biology and ideology. At learning module, a personalized knowledge graph will present after learners select a subject. The concept on the knowldge graph denoted different proficien with different color. Learners can select the concept they are not familiar with or recommended by the SLP. For each concept, there are several types of learning resources are available, including micro-lecture videos, quiz question, and teaching handouts on the key concepts of each subject. SLP can also selectively recommend learning resources to learners according to knoledge graph during their learning process. Ai report viewing module, learner can view the learn report after learning or assessment to better known own learning situation. They can find academic performance and competency evaluation results of each subject.
 
-For Learn and Report, it currently supports a number of subjects, including mathmatics,
-Chinese, English, history, geography, physics, biology and ideology.
-For each subject, a personalized knowledge graph can be automatically constructed for each individual learner,
-according to his or her personal assessment result and the interaction data with the robot.
-Students can select concept according to the knowledge proficiency denoted by the learner's
-assessment results.
+At casual chatting module, user can have an  arbitrary conversation with the SLP. To provide a more interesting and nice interaction experience, a dedicated conversational agent (CA) engine is designed to support casual chatting with learners. The designed CA used reinforcement learning model generate human like response during a conversation.
 
-Moreover, SLP manages a large volume of learning resources. Several types of learning resources
-are currently available for each concept, including micro-lecture videos, quiz question, and 
-teaching handouts on the key concepts of each subject.
+The SLP robot has three main functionalities: Learn, Report and Casual Chatting. Example interactions can be seen in demo video at https://aic-fe.bnu.edu.cn/xwdt/xzsp/57270.html or https://aic-fe.bnu.edu.cn/en/news/video/56947.html.
+For Learn and Report, it currently supports a number of subjects, including mathematics, Chinese, English, history, geography, physics, biology and ideology. Students can select concept according to the knowledge proficiency denoted by different color. Moreover, SLP manages a large volume of learning resources. Learners can select several type of learning resources for each concept, including micro-lecture videos, quiz question, and teaching handouts on the key concepts of each subject. SLP can also selectively recommend learning resources to learners according to knoledge graph during their learning process.
 
-Learners can view the report after learning or assessment to better know own learning situation.
-Learners can find comprehensive evaluation and concrete advantages and disadvantages of each subject.
+Learners can view the report after learning or assessment to better known own learning situation. They can find comprehensive evaluation and concrete advantages and disadvantages of each subject.
 
-To provide a more interesting and nice interaction experience, a dedicated conversational agent (CA) 
-engine is designed to support casual chatting with learners. The designed CA used reinforcement learning
-model generate human like response during a conversation.
+To provide a more interesting and nice interaction experience, a dedicated conversational agent (CA) engine is designed to support casual chatting with learners. The designed CA used reinforcement learning model generate human like response during a conversation.
 
-***
-    Learners can select Learn, Report or Casual Chatting while entering the SLP system.
-
-    learn report chatting
-
-    select functionality -> select subjects -> select knowledge -> resource
-***
 
