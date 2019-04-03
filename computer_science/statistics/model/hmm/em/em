@@ -1,0 +1,4 @@
+Expectation Maximization Algorithm
+
+EM is an iterative algorithm for maximum likelihood estimation 
+of probability model parameters with hidden variables.
