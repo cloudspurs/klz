@@ -1,0 +1,30 @@
+English Encoding
+	ASCII: 1 Byte, 7 bits; 128 characters, 33 unprint, 95 print
+	EASCII: 1 Byte, 8 bits = ISO/IEC 646
+	ISO-8859-1(Latin-1): 1 Byte
+
+
+Chinese Encoding
+	GB2312, GBK, GB18030
+
+Unicode, UCS-2, UCS-4, UTF-8, UTF-16
+	UCS-2: 2 Bytes, 16 bits
+	UCS-4: 4 Bytes, 31 bits, 128 groups, 256 planes, 256 rows, 256 cells
+	BMP: Basic Multilingual Plane, group 0, plane 0
+	Unicode: Universal Multiple-Octet Coded Character Set
+	UCS: Unicode Character Set
+	UTF: UCS Transeformation Format
+
+UCS-2			->		UTF-8
+0000 - 007F				0xxxxxxx
+0080 - 07FF				110xxxxx 10xxxxxx
+0800 - FFFF				1110xxxx 10xxxxxx 10 xxxxxx
+
+endian(字节许)
+	big endian, little endian
+
+magic number
+	Unicode: FFFE
+	Unicode Big Endian: FEFF
+	UTF-8: EFBBBF
+
