@@ -1,0 +1,14 @@
+
+CNN(Convolutional Neural Network)
+
+RNN
+	Recurrent Neural Network(time)
+		LSTM(Long Short-Term Memory)
+		GRU(Gated Recurrent Unit 门控循环单元)
+	Recursive Neural Network(structure)
+
+BiRNN(Bidirectional(双向)RNN)
+
+NMT(Neural Machine Translation, 神经网络机器翻译)
+
+	

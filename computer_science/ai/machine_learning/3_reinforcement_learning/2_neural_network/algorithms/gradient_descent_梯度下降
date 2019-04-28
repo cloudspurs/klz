@@ -1,0 +1,23 @@
+1. Gradient Descent Optimizaion(梯度下降)
+    Batch Gradient Descent
+    Stochastic Gradient Descent
+    Mini-batch Gradient Descent
+
+Batch Gradient Descent
+    For the entire training set, there may be a problem of insufficient memory.
+    Convergence rate is slow.
+    
+Stochastic Gradient Descent
+    A training sample for the training set. Also known as online learning.
+    Convergence rate is faster. There may be a shock phenomenon.
+
+Momentum Optimazation
+
+NAG(Nesterov Accelerated Gradient)
+
+AdaGrad
+
+RMSprop
+
+ADAM(Adaptive moment Estimation)
+
