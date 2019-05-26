@@ -1,0 +1,14 @@
+sigmoid
+
+f(x) = 1/(1+exp(-x))
+
+x: (-infi, +infi)
+y: (0, 10
+two-classification
+
+gradient disappear
+
+
+
+
+

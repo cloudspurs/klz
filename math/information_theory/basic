@@ -1,0 +1,15 @@
+Information Content(信息量)
+    I(x) = -log(p(x))
+    p(x) = probability distribution function
+
+Entropy(熵): expectation of all information content
+    H(x) = -SUM[1,n](p(x)log(p(x))) 
+
+    0-1 distribution: H(x) = -p(x)log(p(x)) - (1-p(x))log(1-p(x))
+
+Relative Entropy(相对熵) = Kullback-leibler Divergence(KL散度)
+    RE(p|q) = SUM[1,n](p(x)log(p(x)/q(x)))
+
+Cross Entropy(交叉熵)
+    H(p,q) = -SUM[1,n](p(x)log(q(x)))
+
